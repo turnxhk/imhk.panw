@@ -1,0 +1,1902 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>網路安全分配藍圖 - 香港及大中華地區產品經理完整指南</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-blue: #0066cc;
+            --light-blue: #e8f0ff;
+            --accent-cyan: #00b4d8;
+            --dark-text: #1a1a2e;
+            --light-gray: #f5f7fa;
+            --white: #ffffff;
+            --border-color: #e0e7ff;
+            --success-green: #10b981;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #e8f0ff 100%);
+            color: var(--dark-text);
+            line-height: 1.6;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: var(--white);
+            border-bottom: 2px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 8px rgba(0, 102, 204, 0.1);
+        }
+
+        .header-container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo::before {
+            content: "🔐";
+            font-size: 1.8rem;
+        }
+
+        nav {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        nav button {
+            background: var(--light-blue);
+            border: 1px solid var(--border-color);
+            padding: 0.7rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: var(--primary-blue);
+            transition: all 0.3s ease;
+        }
+
+        nav button:hover,
+        nav button.active {
+            background: var(--primary-blue);
+            color: var(--white);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 102, 204, 0.3);
+        }
+
+        /* Main Container */
+        main {
+            max-width: 1400px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+
+        .section {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .section.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Executive Summary */
+        .summary-card {
+            background: linear-gradient(135deg, var(--white) 0%, var(--light-blue) 100%);
+            border-left: 4px solid var(--primary-blue);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 16px rgba(0, 102, 204, 0.1);
+        }
+
+        .summary-card h2 {
+            color: var(--primary-blue);
+            margin-bottom: 1rem;
+            font-size: 1.8rem;
+        }
+
+        .key-factors {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .factor-item {
+            background: var(--white);
+            padding: 1.5rem;
+            border-radius: 6px;
+            border-top: 3px solid var(--accent-cyan);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .factor-item strong {
+            color: var(--primary-blue);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Section Headers */
+        .section-header {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-cyan) 100%);
+            color: var(--white);
+            padding: 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 16px rgba(0, 102, 204, 0.2);
+        }
+
+        .section-header h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            font-size: 1.1rem;
+            opacity: 0.95;
+        }
+
+        /* Content Cards */
+        .content-card {
+            background: var(--white);
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            border-left: 4px solid var(--accent-cyan);
+        }
+
+        .content-card h2 {
+            color: var(--primary-blue);
+            margin-bottom: 1.5rem;
+            font-size: 1.6rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light-blue);
+        }
+
+        .content-card h3 {
+            color: var(--dark-text);
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        /* Lists */
+        ul, ol {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.7rem;
+            padding-left: 0.5rem;
+        }
+
+        /* Tables */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: var(--white);
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        th {
+            background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-cyan) 100%);
+            color: var(--white);
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        tr:hover {
+            background: var(--light-blue);
+        }
+
+        /* Images */
+        .image-container {
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0, 102, 204, 0.15);
+        }
+
+        .image-caption {
+            text-align: center;
+            color: #666;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            font-style: italic;
+        }
+
+        /* Metrics Grid */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .metric-card {
+            background: linear-gradient(135deg, var(--light-blue) 0%, #f0f9ff 100%);
+            border: 2px solid var(--border-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+
+        .metric-card .label {
+            color: var(--dark-text);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .metric-card .value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        .metric-card .description {
+            color: #666;
+            font-size: 0.85rem;
+        }
+
+        /* Action Plans Timeline */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline-item {
+            margin-bottom: 2rem;
+            padding-left: 2rem;
+            border-left: 3px solid var(--accent-cyan);
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -9px;
+            top: 0;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: var(--primary-blue);
+            border: 3px solid var(--white);
+            box-shadow: 0 0 0 3px var(--accent-cyan);
+        }
+
+        .timeline-item h3 {
+            color: var(--primary-blue);
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark-text);
+            color: var(--white);
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                justify-content: center;
+                text-align: center;
+            }
+
+            nav {
+                width: 100%;
+                justify-content: center;
+            }
+
+            nav button {
+                padding: 0.6rem 1rem;
+                font-size: 0.85rem;
+            }
+
+            main {
+                padding: 0 1rem;
+            }
+
+            .section-header h1 {
+                font-size: 1.6rem;
+            }
+
+            .metric-card .value {
+                font-size: 1.5rem;
+            }
+
+            table {
+                font-size: 0.85rem;
+            }
+
+            td, th {
+                padding: 0.7rem;
+            }
+        }
+
+        /* Highlight Boxes */
+        .highlight-box {
+            background: linear-gradient(135deg, #fff5e6 0%, #fff9f0 100%);
+            border-left: 4px solid #ff9800;
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin: 1.5rem 0;
+        }
+
+        .highlight-box strong {
+            color: #ff6f00;
+        }
+
+        /* Success Box */
+        .success-box {
+            background: linear-gradient(135deg, #e8f5e9 0%, #f1f8e9 100%);
+            border-left: 4px solid var(--success-green);
+            padding: 1.5rem;
+            border-radius: 6px;
+            margin: 1.5rem 0;
+        }
+
+        /* Tabs within sections */
+        .tab-buttons {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .tab-button {
+            background: var(--light-blue);
+            border: 1px solid var(--border-color);
+            padding: 0.7rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            color: var(--primary-blue);
+            font-weight: 500;
+        }
+
+        .tab-button:hover,
+        .tab-button.active {
+            background: var(--primary-blue);
+            color: var(--white);
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-container">
+            <div class="logo">網路安全分配卓越藍圖</div>
+            <nav>
+                <button class="nav-btn active" data-section="overview">概覽</button>
+                <button class="nav-btn" data-section="business-model">商業模式</button>
+                <button class="nav-btn" data-section="vendor">供應商管理</button>
+                <button class="nav-btn" data-section="channel">渠道策略</button>
+                <button class="nav-btn" data-section="sales">銷售執行</button>
+                <button class="nav-btn" data-section="operations">營運流程</button>
+                <button class="nav-btn" data-section="team">團隊發展</button>
+                <button class="nav-btn" data-section="action-plan">行動計畫</button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <!-- Overview Section -->
+        <section id="overview" class="section active">
+            <div class="summary-card">
+                <h2>執行概述</h2>
+                <p>本藍圖為期 12-18 個月，旨在幫助您在香港及大中華地區打造高效能的網路安全分配業務。您將從日常供應商和夥伴管理的角色轉變為業務單位的「迷你總經理」，推動盈利增長並建立市場領導地位。</p>
+            </div>
+
+            <div class="key-factors">
+                <div class="factor-item">
+                    <strong>📊 利潤率優化</strong>
+                    掌握分配業務的利潤率現實（12-18% 毛利率），通過量、返利達成和營運效率驅動盈利
+                </div>
+                <div class="factor-item">
+                    <strong>🤝 渠道夥伴生態</strong>
+                    構建世界級的渠道夥伴生態系統（VARs、MSPs、MSSPs），生成 50%+ 的管道
+                </div>
+                <div class="factor-item">
+                    <strong>🏢 供應商關係</strong>
+                    建立緊密的供應商關係，清晰治理和相互問責
+                </div>
+                <div class="factor-item">
+                    <strong>👥 高績效團隊</strong>
+                    建立 6 人團隊，圍繞損益表責任和客戶成果對齐
+                </div>
+                <div class="factor-item">
+                    <strong>📅 季度執行</strong>
+                    執行紀律嚴明的季度業務審查和 90 天行動週期
+                </div>
+                <div class="factor-item">
+                    <strong>🎯 市場領導</strong>
+                    在香港和大中華地區建立網路安全分配市場領導地位
+                </div>
+            </div>
+
+            <div class="image-container">
+                <img src="https://user-gen-media-assets.s3.amazonaws.com/gemini_images/a971f221-a0b1-4f70-b3c2-783bfd8b01b2.png" alt="網路安全分配價值鏈">
+                <div class="image-caption">網路安全分配價值鏈網絡</div>
+            </div>
+
+            <div class="content-card">
+                <h2>核心成功因素</h2>
+                <h3>1. 掌握利潤經濟學</h3>
+                <p>您的毛利率為 12-18%；這意味著您的利潤取決於：</p>
+                <ul>
+                    <li><strong>返利達成：</strong>與供應商達成目標以解鎖額外 3-4% 返利</li>
+                    <li><strong>量杠桿：</strong>較高的交易量會解鎖更優的定價</li>
+                    <li><strong>營運效率：</strong>每 1% 的利潤改進可轉化為 15-25% 的營運利潤改進</li>
+                </ul>
+
+                <h3>2. 以渠道為先的心態</h3>
+                <p>50% 以上的收入應來自渠道夥伴。這要求：</p>
+                <ul>
+                    <li>系統的夥伴招聘（每年 10-15 個新夥伴）</li>
+                    <li>強大的夥伴培訓和認證計劃</li>
+                    <li>合作銷售和共同營銷機制</li>
+                </ul>
+
+                <h3>3. 供應商紀律</h3>
+                <p>像管理銷售團隊一樣管理供應商：</p>
+                <ul>
+                    <li>季度業務審查和績效檢查</li>
+                    <li>明確的收入、返利和合作目標</li>
+                    <li>定期談判以改進條款和費用</li>
+                </ul>
+
+                <h3>4. 營運卓越</h3>
+                <p>由於利潤微薄，營運效率是關鍵：</p>
+                <ul>
+                    <li>訂單到現金週期 &lt;5 天</li>
+                    <li>銷售未清數 &lt;45 天</li>
+                    <li>準時交付 &gt;98%</li>
+                </ul>
+
+                <h3>5. 團隊發展</h3>
+                <p>您的 6 人團隊是競爭優勢：</p>
+                <ul>
+                    <li>投資於他們的發展（銷售技能、技術知識、財務素養）</li>
+                    <li>建立問責制和明確期望</li>
+                    <li>創建贏文化，慶祝勝利</li>
+                </ul>
+            </div>
+
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="label">年度收入目標</div>
+                    <div class="value">$10M+</div>
+                    <div class="description">12 個月內</div>
+                </div>
+                <div class="metric-card">
+                    <div class="label">毛利率目標</div>
+                    <div class="value">15%+</div>
+                    <div class="description">vs 公司平均 12%</div>
+                </div>
+                <div class="metric-card">
+                    <div class="label">營運利潤率</div>
+                    <div class="value">5%+</div>
+                    <div class="description">vs 公司平均 3%</div>
+                </div>
+                <div class="metric-card">
+                    <div class="label">活躍夥伴</div>
+                    <div class="value">30+</div>
+                    <div class="description">年末時</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Business Model Section -->
+        <section id="business-model" class="section">
+            <div class="section-header">
+                <h1>業務模式與價值鏈</h1>
+                <p>理解分配業務的經濟學和市場動態</p>
+            </div>
+
+            <div class="content-card">
+                <h2>分配業務模式概述</h2>
+                <p>網路安全分配商作為軟體/硬體供應商和渠道夥伴（經銷商、VARs、MSPs、系統集成商）之間的中介。與供應商或託管服務提供商不同，您的業務模式依賴於：</p>
+
+                <h3>收入驅動因素</h3>
+                <ul>
+                    <li><strong>量 + 利潤率：</strong>以薄利潤（通常 12-18% 毛利率）銷售高交易量</li>
+                    <li><strong>效率：</strong>通過營運卓越而非定價力獲利</li>
+                    <li><strong>投資組合組合：</strong>將商品化產品與高利潤服務和解決方案相結合</li>
+                    <li><strong>遞迴收入：</strong>SaaS 和訂閱模式提供更可預測、更高利潤的收入</li>
+                </ul>
+
+                <h3>利潤池分配（$100K 解決方案）</h3>
+                <div class="highlight-box">
+                    <strong>按典型 $100K 銷售分解：</strong>
+                    <ul>
+                        <li><strong>供應商：</strong>~77%（$77,143）- 通過 75-85% 毛利率捕獲大部分價值</li>
+                        <li><strong>分配商：</strong>~12%（$9,524）- 您以薄利潤運營，依賴量和返利</li>
+                        <li><strong>經銷商/VAR：</strong>~18%（$13,333）- 通過服務、集成和關係區分</li>
+                        <li><strong>最終客戶：</strong>支付 $100K 列表價格</li>
+                    </ul>
+                </div>
+
+                <h3>如何在分配中獲勝</h3>
+                <p>分配是高量、高速、低利潤的業務。您無法透過價格贏得；您透過以下方式贏得：</p>
+                <ol>
+                    <li><strong>可用性和物流：</strong>快速將產品交付給夥伴</li>
+                    <li><strong>夥伴支持：</strong>使夥伴成功銷售</li>
+                    <li><strong>投資組合廣度：</strong>在一個屋簷下提供多個解決方案</li>
+                    <li><strong>返利最大化：</strong>達到供應商目標以解鎖額外利潤</li>
+                    <li><strong>營運卓越：</strong>降低成本，改進效率</li>
+                </ol>
+            </div>
+
+            <div class="content-card">
+                <h2>香港 vs 大中華市場</h2>
+
+                <h3>香港市場特徵</h3>
+                <ul>
+                    <li><strong>規模：</strong>年市場約 $380-450M（高人均支出、成熟金融部門）</li>
+                    <li><strong>主要驅動因素：</strong>PDPO、PCI DSA、行業特定標準</li>
+                    <li><strong>定價：</strong>高級供應商相比開發市場享有 5-10% 溢價</li>
+                    <li><strong>夥伴：</strong>全球系統集成商、本地電信和精品 SI 混合</li>
+                </ul>
+
+                <h3>大中華市場特徵（高增長機會）</h3>
+                <ul>
+                    <li><strong>規模和增長：</strong>2025 年 $167.5B，19.1% CAGR（全球最快增長）</li>
+                    <li><strong>主要驅動因素：</strong>強制 NDSMR、數據主權、5G 安全、工業 4.0</li>
+                    <li><strong>數據駐留：</strong>70% 的部署保持在內部部署（數據必須留在中國）</li>
+                    <li><strong>市場領導者：</strong>華為 22% 市佔率；全球供應商 30-40% 份額</li>
+                    <li><strong>增長機會：</strong>MSP/MSSP 是最快增長的渠道（20-30% CAGR）</li>
+                    <li><strong>地理集中：</strong>46% 的市場價值在北京、上海、深圳；第 2 層城市快速增長</li>
+                </ul>
+
+                <div class="success-box">
+                    <strong>關鍵含義：</strong>合規是特徵，不是錯誤。獲得 GB/T 35273 和 NDSMR 認證的供應商在大中華地區享受溢價定價。
+                </div>
+            </div>
+
+            <div class="image-container">
+                <img src="https://user-gen-media-assets.s3.amazonaws.com/gemini_images/1506bbf7-f3e4-408e-8dc3-ff917ac7e2e7.png" alt="團隊結構">
+                <div class="image-caption">6 人網路安全團隊結構</div>
+            </div>
+        </section>
+
+        <!-- Vendor Management Section -->
+        <section id="vendor" class="section">
+            <div class="section-header">
+                <h1>供應商組合和關係管理</h1>
+                <p>選擇、談判和管理供應商的最佳實踐</p>
+            </div>
+
+            <div class="content-card">
+                <h2>理想供應商檔案</h2>
+
+                <h3>市場地位</h3>
+                <ul>
+                    <li>在其安全類別（防火牆、SASE、端點、電子郵件、雲安全）中排名前 3-10</li>
+                    <li>經過驗證的上市策略（直接銷售或成熟渠道計劃）</li>
+                    <li>年增長 15% 以上（避免停滯供應商）</li>
+                    <li>全球收入最少 $100M（確保穩定性）</li>
+                </ul>
+
+                <h3>產品特徵</h3>
+                <ul>
+                    <li>訂閱/SaaS 模式（遞迴收入、更高利潤、更輕鬆的續訂）</li>
+                    <li>多租戶能力（MSPs/MSSPs 可以提供給多個客戶）</li>
+                    <li>平台架構（可與其他供應商解決方案捆綁）</li>
+                    <li>強大的 API 和集成生態系統（合作夥伴可以自定義）</li>
+                </ul>
+
+                <h3>計劃成熟度</h3>
+                <ul>
+                    <li>有明確層級和利益的既定合作夥伴計劃</li>
+                    <li>分配商的專職渠道經理</li>
+                    <li>已發佈的利潤率、返利和交易註冊政策</li>
+                    <li>可用的共同投資（MDF、SPIFFs、培訓計劃）</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h2>談判要點：利潤率、返利和交易註冊</h2>
+
+                <h3>A. 利潤率結構（分配商成本）</h3>
+                <table>
+                    <tr>
+                        <th>產品類別</th>
+                        <th>分配商成本</th>
+                        <th>典型 GM%</th>
+                        <th>備註</th>
+                    </tr>
+                    <tr>
+                        <td>防火牆（設備）</td>
+                        <td>35-45% MSRP</td>
+                        <td>55-65%</td>
+                        <td>硬體組件；競爭對手可能有更低成本</td>
+                    </tr>
+                    <tr>
+                        <td>防火牆（軟體/訂閱）</td>
+                        <td>50-60% MSRP</td>
+                        <td>40-50%</td>
+                        <td>由於 SaaS 模式，成本更高；遞迴收入</td>
+                    </tr>
+                    <tr>
+                        <td>SASE（集成）</td>
+                        <td>55-65% MSRP</td>
+                        <td>35-45%</td>
+                        <td>平台遊戲；供應商想要量</td>
+                    </tr>
+                    <tr>
+                        <td>端點檢測和響應</td>
+                        <td>60-70% MSRP</td>
+                        <td>30-40%</td>
+                        <td>高量商品化類別</td>
+                    </tr>
+                    <tr>
+                        <td>電子郵件安全（雲端）</td>
+                        <td>65-75% MSRP</td>
+                        <td>25-35%</td>
+                        <td>成熟段；利潤率緊張</td>
+                    </tr>
+                    <tr>
+                        <td>雲安全（CSPM、CWPP）</td>
+                        <td>50-60% MSRP</td>
+                        <td>40-50%</td>
+                        <td>新興類別；供應商仍在投資</td>
+                    </tr>
+                </table>
+
+                <h3>B. 返利計劃（真正利潤槓桿）</h3>
+                <p>返利是您真正的利潤槓桿。供應商通常提供：</p>
+                <ul>
+                    <li><strong>基礎返利：</strong>基於年收入的分層返利（$500K-$1M = 1%; $1M-$2M = 2%; 等等）</li>
+                    <li><strong>層級加速返利：</strong>提早達到目標的獎金（例如，Q3 達到 $2M = 額外 1%）</li>
+                    <li><strong>新業務返利：</strong>每個生成 $50K+ 收入的新夥伴的獎金</li>
+                    <li><strong>共同投資返利：</strong>MDF 或培訓資金（非現金）</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <strong>談判策略：</strong> 堆疊返利、要求 18 個月的跑道、建立季度檢查點而不是年度核實、推動現金返利（而非 MDF）以改進現金流。
+                </div>
+
+                <h3>C. 交易註冊（保護您的邊際）</h3>
+                <p>交易註冊可保護您免於供應商或其他合作夥伴降價。典型條款：</p>
+                <ul>
+                    <li><strong>期限：</strong>30-90 天保護；超過時可更新註冊</li>
+                    <li><strong>承保範圍：</strong>保護競爭對手定價；某些供應商也保護對內部直銷</li>
+                    <li><strong>要求：</strong>您必須證明合法銷售活動（會議、提案、演示）</li>
+                    <li><strong>批准率：</strong>瞄準 &gt;70% 批准率；&lt;60% 表示弱夥伴需求</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h2>供應商組合分段</h2>
+
+                <table>
+                    <tr>
+                        <th>層級</th>
+                        <th>特徵</th>
+                        <th>示例</th>
+                        <th>Y1 收入目標</th>
+                        <th>返利目標</th>
+                    </tr>
+                    <tr>
+                        <td><strong>第 1 層（策略）</strong></td>
+                        <td>頂級供應商；50%+ 收入；深度關係</td>
+                        <td>Palo Alto、Fortinet、CrowdStrike</td>
+                        <td>各 $2-3M</td>
+                        <td>3-4%+</td>
+                    </tr>
+                    <tr>
+                        <td><strong>第 2 層（成長）</strong></td>
+                        <td>快速增長；20-30% 收入；新興領導者</td>
+                        <td>Zscaler、Rapid7、SentinelOne</td>
+                        <td>各 $500K-$1M</td>
+                        <td>2-3%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>第 3 層（新興）</strong></td>
+                        <td>新關係；10-20% 收入；測試配合</td>
+                        <td>區域供應商、新創公司</td>
+                        <td>各 $100-300K</td>
+                        <td>1-2%</td>
+                    </tr>
+                </table>
+
+                <h3>季度業務審查 (QBR) 議程</h3>
+                <ol>
+                    <li><strong>業務審查（30 分鐘）：</strong>YTD 收入、管道、返利達成；vs 計劃績效；勝利、損失、競爭分析</li>
+                    <li><strong>帳戶計劃（30 分鐘）：</strong>Q4/次季度目標；夥伴招聘管道；競爭威脅</li>
+                    <li><strong>上市（20 分鐘）：</strong>MDF 支出和 ROI；營銷活動績效；即將推出的活動</li>
+                    <li><strong>營運項目（10 分鐘）：</strong>系統問題、培訓缺口；合同修正案；下個 QBR 日期</li>
+                </ol>
+            </div>
+        </section>
+
+        <!-- Channel Strategy Section -->
+        <section id="channel" class="section">
+            <div class="section-header">
+                <h1>渠道和夥伴策略</h1>
+                <p>構建世界級渠道夥伴生態系統</p>
+            </div>
+
+            <div class="content-card">
+                <h2>夥伴類型和分段</h2>
+
+                <h3>網路安全分配中的夥伴類型</h3>
+                <ul>
+                    <li><strong>註冊經銷商：</strong>向 SMB/中市場客戶銷售；可能增加價值或純產品經銷商</li>
+                    <li><strong>VAR/系統集成商：</strong>部署集成多供應商解決方案；提供服務和實施</li>
+                    <li><strong>MSP/MSSP：</strong>最快增長段（20-30% CAGR）；將安全作為服務銷售</li>
+                    <li><strong>雲合作夥伴：</strong>雲提供商（阿里雲、騰訊雲、華為雲）綑綁安全；大規模觸及</li>
+                    <li><strong>電信合作夥伴：</strong>將安全與連接相綑綁；有效觸及 SMB</li>
+                    <li><strong>電子商務合作夥伴：</strong>線上零售商；大眾市場觸及</li>
+                </ul>
+
+                <h3>推薦的夥伴層級和福利</h3>
+                <table>
+                    <tr>
+                        <th>層級</th>
+                        <th>進入標準</th>
+                        <th>年收入目標</th>
+                        <th>福利</th>
+                    </tr>
+                    <tr>
+                        <td><strong>註冊</strong></td>
+                        <td>簽署協議；最少培訓</td>
+                        <td>$50-100K</td>
+                        <td>門戶訪問、銷售宣傳、基本培訓</td>
+                    </tr>
+                    <tr>
+                        <td><strong>銀級</strong></td>
+                        <td>$100K+ 收入；1 個認證代表</td>
+                        <td>$100-300K</td>
+                        <td>專任帳戶經理、季度評論、MDF 訪問</td>
+                    </tr>
+                    <tr>
+                        <td><strong>金級</strong></td>
+                        <td>$300K+ 收入；3+ 認證代表</td>
+                        <td>$300K-$1M</td>
+                        <td>共同營銷資金、優先支持、供應商介紹</td>
+                    </tr>
+                    <tr>
+                        <td><strong>鉑金級</strong></td>
+                        <td>$1M+ 收入；5+ 認證代表</td>
+                        <td>$1M+</td>
+                        <td>獨家定價、專任預銷售工程師、執行 QBR</td>
+                    </tr>
+                </table>
+
+                <h3>夥伴招聘 90 天計劃（5-10 個新夥伴）</h3>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <h3>第 1 階段：勘察（1-3 周）</h3>
+                        <p>根據地理覆蓋、垂直對齐和現有供應商關係確定 20-30 個目標夥伴。建立具有公司名稱、位置、收入、主要聯絡人和競爭對手映射的目標列表。</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h3>第 2 階段：外展（4-6 周）</h3>
+                        <p>多管道外展：冷電子郵件、LinkedIn 連接、現有夥伴的溫暖介紹。準備突出為什麼他們應該合作的簡明 1 頁推銷（TAM、邊際機會、支持）。</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h3>第 3 階段：發現電話（7-12 周）</h3>
+                        <p>瞭解他們的業務、安全能力、痛點。測試合作夥伴關係接受度。合格和非合格潛在客戶分開追踪。</p>
+                    </div>
+                    <div class="timeline-item">
+                        <h3>第 4 階段：上線（13-18 周）</h3>
+                        <p>執行合作夥伴協議、門戶設置、團隊培訓。第一個聯合交易。獨立週期和月度檢查。</p>
+                    </div>
+                </div>
+
+                <div class="success-box">
+                    <strong>成功指標（Q1 後）：</strong> 70%+ 的夥伴團隊在 2 個主要產品中認證；第一個聯合交易結案（$10K+）；3+ 交易在夥伴管道中；Q1 預測收入 $20K+
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2>夥伴支持和共同銷售</h2>
+
+                <h3>夥伴-引領管道</h3>
+                <p><strong>目標：</strong>夥伴應生成您總管道的 50-60%</p>
+                <ul>
+                    <li>共同銷售流程：夥伴標識客戶 → 聯合資格 → 帳戶計劃 → 聯合演示和談判</li>
+                    <li>交易註冊：保護邊際；防止價格競爭</li>
+                    <li>共同成功：實施、持續客戶關係、聯合 QBR</li>
+                </ul>
+
+                <h3>要追踪的指標</h3>
+                <ul>
+                    <li>夥伴-引領管道中的機會數量和價值</li>
+                    <li>夥伴管道關閉率（% 轉換為收入）</li>
+                    <li>平均夥伴交易規模</li>
+                    <li>夥伴收入趨勢（月-月、季-季）</li>
+                </ul>
+            </div>
+
+            <div class="image-container">
+                <img src="https://user-gen-media-assets.s3.amazonaws.com/gemini_images/4049fe0e-2fd8-4bf1-9515-6262c472c9fd.png" alt="銷售管道">
+                <div class="image-caption">銷售管道階段和轉換率</div>
+            </div>
+        </section>
+
+        <!-- Sales Execution Section -->
+        <section id="sales" class="section">
+            <div class="section-header">
+                <h1>上市和銷售執行</h1>
+                <p>結構化銷售、預銷售和管道管理</p>
+            </div>
+
+            <div class="content-card">
+                <h2>推薦的 6 人團隊結構</h2>
+                <table>
+                    <tr>
+                        <th>角色</th>
+                        <th>標題</th>
+                        <th>FTE</th>
+                        <th>主要責任</th>
+                    </tr>
+                    <tr>
+                        <td><strong>您</strong></td>
+                        <td>產品經理/BU 主管</td>
+                        <td>1.0</td>
+                        <td>P&L 所有權、供應商管理、戰略、團隊領導</td>
+                    </tr>
+                    <tr>
+                        <td>銷售經理</td>
+                        <td>高級銷售經理（企業）</td>
+                        <td>1.0</td>
+                        <td>直接銷售給大型客戶、關鍵帳戶管理、配額達成</td>
+                    </tr>
+                    <tr>
+                        <td>預銷售</td>
+                        <td>產品專家/預銷售工程師</td>
+                        <td>1.0</td>
+                        <td>技術預銷售、解決方案設計、夥伴支持、認證</td>
+                    </tr>
+                    <tr>
+                        <td>合作夥伴</td>
+                        <td>合作夥伴開發經理</td>
+                        <td>1.0</td>
+                        <td>招聘、上線、支持、共同銷售</td>
+                    </tr>
+                    <tr>
+                        <td>營運</td>
+                        <td>營運/分析經理</td>
+                        <td>0.5-1.0</td>
+                        <td>預報、報告、合規、流程改進</td>
+                    </tr>
+                    <tr>
+                        <td>SDR</td>
+                        <td>銷售發展代表</td>
+                        <td>0.5-1.0</td>
+                        <td>潛在顧客生成、資格證明、會議預定</td>
+                    </tr>
+                </table>
+
+                <h3>帳戶計劃流程（季度）</h3>
+                <ol>
+                    <li><strong>定義戰略帳戶：</strong>確定 10-15 個大客戶，高增長潛力</li>
+                    <li><strong>帳戶戰略：</strong>定義 12 個月願景、入口點、買方流程</li>
+                    <li><strong>季度計劃：</strong>定義 Q 目標、分配帳戶主管、定義活動</li>
+                    <li><strong>月度追踪和審查：</strong>評估進度、識別風險、調整方法</li>
+                </ol>
+            </div>
+
+            <div class="content-card">
+                <h2>管道管理和預報</h2>
+
+                <h3>管道階段（4-5 階段漏斗）</h3>
+                <table>
+                    <tr>
+                        <th>階段</th>
+                        <th>定義</th>
+                        <th>合格標準</th>
+                        <th>概率</th>
+                    </tr>
+                    <tr>
+                        <td><strong>1. 合格潛在顧客</strong></td>
+                        <td>初始接觸；配合評估</td>
+                        <td>符合 ICP；已識別痛點</td>
+                        <td>5-10%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>2. 需求分析</strong></td>
+                        <td>需求評估完成</td>
+                        <td>預算確認；決策流程映射</td>
+                        <td>20-30%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>3. 解決方案建議</strong></td>
+                        <td>提案已提交</td>
+                        <td>書面建議；定價共享；評估進行中</td>
+                        <td>50%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>4. 談判</strong></td>
+                        <td>條款完成中</td>
+                        <td>定價批准；合同條款審查</td>
+                        <td>75%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>5. 已結案</strong></td>
+                        <td>合同簽署；訂單提交</td>
+                        <td>已簽署合同；已下訂單</td>
+                        <td>100%</td>
+                    </tr>
+                </table>
+
+                <h3>管道覆蓋率</h3>
+                <p><strong>目標：</strong>第 3-5 階段的季度目標的 3.5 倍</p>
+                <p><strong>示例：</strong>如果季度目標為 $1M，您需要在建議、談判和結案階段中有 $3.5M</p>
+
+                <h3>月度預報流程</h3>
+                <ul>
+                    <li><strong>第 1 周：</strong>銷售團隊輸入管道更新（交易名稱、客戶、供應商、大小、階段、概率）</li>
+                    <li><strong>第 2 周：</strong>銷售經理審查並篩選管道（移除停滯交易、更新概率）</li>
+                    <li><strong>第 3 周：</strong>領導層預報審查（確定過度依賴、調整預報）</li>
+                </ul>
+
+                <div class="highlight-box">
+                    <strong>預報最佳實踐：</strong>
+                    <ul>
+                        <li>使用加權概率（50% 交易 = 0.5x 交易規模）</li>
+                        <li>分開「最可能」和「樂觀」預報</li>
+                        <li>追踪預報準確度（實際 vs 預測）</li>
+                        <li>按季度和年度追踪管道轉換</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2>定價和折扣管理</h2>
+
+                <table>
+                    <tr>
+                        <th>產品類別</th>
+                        <th>經銷商典型折扣</th>
+                        <th>企業折扣</th>
+                        <th>備註</th>
+                    </tr>
+                    <tr>
+                        <td>防火牆（設備）</td>
+                        <td>20-30%</td>
+                        <td>30-40%</td>
+                        <td>硬體商品化；生命週期內價格侵蝕</td>
+                    </tr>
+                    <tr>
+                        <td>防火牆（軟體/雲）</td>
+                        <td>15-25%</td>
+                        <td>25-35%</td>
+                        <td>訂閱模式；價格壓力較少</td>
+                    </tr>
+                    <tr>
+                        <td>SASE</td>
+                        <td>15-20%</td>
+                        <td>20-30%</td>
+                        <td>新興類別；談判空間</td>
+                    </tr>
+                    <tr>
+                        <td>端點安全</td>
+                        <td>15-25%</td>
+                        <td>25-35%</td>
+                        <td>成熟類別；顯著折扣</td>
+                    </tr>
+                    <tr>
+                        <td>電子郵件安全</td>
+                        <td>20-30%</td>
+                        <td>30-40%</td>
+                        <td>高度競爭；激進折扣預期</td>
+                    </tr>
+                </table>
+
+                <h3>折扣政策</h3>
+                <ul>
+                    <li><strong>經銷商：</strong>分配商利潤已內置；經銷商獲得您的邊際</li>
+                    <li><strong>直接客戶：</strong>您可以比經銷商更深折扣</li>
+                    <li><strong>大交易(&gt;$50K)：</strong>升級到您進行批准</li>
+                    <li><strong>競爭威脅：</strong>如果客戶針對競爭對手進行評估，可以折扣 5-10%</li>
+                </ul>
+
+                <h3>定價實現（關鍵指標）</h3>
+                <p><strong>定義：</strong> 實際收入/列表價格</p>
+                <p><strong>目標：</strong> &gt;90%（意味著 &lt;10% 平均折扣）</p>
+                <p><strong>如果低於 85%：</strong> 標記為風險；調查原因；調整方法</p>
+            </div>
+
+            <div class="content-card">
+                <h2>季度和年度目標級聯</h2>
+
+                <h3>級聯模型</h3>
+                <p><strong>第 1 級：</strong> 公司 P&L 目標 → $10M 收入、15% 毛利率</p>
+                <p><strong>第 2 級：</strong> BU 分解（按供應商、渠道、客戶）</p>
+                <p><strong>第 3 級：</strong> 季度級聯 Q1: $2M (20%) → Q4: $3M (30%)</p>
+                <p><strong>第 4 級：</strong> 團隊成員目標：</p>
+                <ul>
+                    <li>銷售經理：$2M 年度（各季度 $500K）</li>
+                    <li>合作夥伴經理：$5M 夥伴-生成</li>
+                    <li>預銷售：支持函數；無直接配額</li>
+                    <li>SDR：每月 50+ 撥號；20+ 預定會議；40-50 MQL</li>
+                    <li>營運：預報準確度 &gt;85%；DSO &lt;45 天</li>
+                </ul>
+
+                <h3>月度管理審查</h3>
+                <ul>
+                    <li>實際 vs 目標（每個團隊成員的 % 計劃）</li>
+                    <li>管道趨勢（預報是否執行？）</li>
+                    <li>風險和機會（哪些交易有風險？哪些超重？）</li>
+                    <li>教練對話（需要什麼才能回到計劃？）</li>
+                </ul>
+            </div>
+
+            <div class="image-container">
+                <img src="https://user-gen-media-assets.s3.amazonaws.com/gemini_images/10cf187f-5d76-4935-872b-7a29753f6063.png" alt="市場成長">
+                <div class="image-caption">香港和大中華市場成長機會</div>
+            </div>
+        </section>
+
+        <!-- Operations Section -->
+        <section id="operations" class="section">
+            <div class="section-header">
+                <h1>營運、系統和流程</h1>
+                <p>現代分配商必須做對的批評流程</p>
+            </div>
+
+            <div class="content-card">
+                <h2>關鍵營運流程</h2>
+
+                <h3>1. 訂單到現金 (O2C)</h3>
+                <ul>
+                    <li><strong>流程：</strong>接收訂單 → 驗證 → 揀貨/打包 → 運送 → 發票 → 收款</li>
+                    <li><strong>週期時間目標：</strong>2-5 天（合作夥伴更快，複雜企業交易較慢）</li>
+                    <li><strong>關鍵指標：</strong>準時交付率 &gt;98%；開票 &lt;1 天；DSO &lt;45 天</li>
+                </ul>
+
+                <h3>2. 庫存和導引時間管理</h3>
+                <ul>
+                    <li><strong>硬體產品：</strong>保持 30-60 天庫存；與供應商合作預測</li>
+                    <li><strong>軟體/SaaS：</strong>無庫存；供應商直接許可</li>
+                    <li><strong>緩衝庫存：</strong>高需求商品（頂級防火牆型號）</li>
+                    <li><strong>過時風險：</strong>監控供應商路線圖；退役舊型號</li>
+                </ul>
+
+                <h3>3. 信用控制和應收帳款</h3>
+                <ul>
+                    <li><strong>信用額度：</strong>基於合作夥伴規模和支付歷史設置每合作夥伴</li>
+                    <li><strong>典型條款：</strong>Net 30-60（合作夥伴想要更多；堅持 Net 30）</li>
+                    <li><strong>收款：</strong>合作夥伴帳戶經理擁有；超過 15 天後升級</li>
+                    <li><strong>激勵：</strong>提供 2% 提前付款折扣</li>
+                </ul>
+
+                <h3>4. 續訂和訂閱管理</h3>
+                <ul>
+                    <li><strong>關鍵對 SaaS/訂閱：</strong>追踪續訂日期；提前 60-90 天通知</li>
+                    <li><strong>續訂率目標：</strong>&gt;85%（續訂損失 = 遞迴收入損失）</li>
+                    <li><strong>向上銷售機會：</strong>使用續訂增加座位計數、添加產品</li>
+                    <li><strong>自動化：</strong>使用續訂管理工具自動化工作流</li>
+                </ul>
+
+                <h3>5. 合規和法規</h3>
+                <ul>
+                    <li><strong>軟體許可：</strong>追踪供應商許可協議合規</li>
+                    <li><strong>數據隱私：</strong>PDPO（香港）、GDPR（如果服務 EU）、NDSMR（大中華）</li>
+                    <li><strong>審計線索：</strong>維護客戶部署、許可、使用記錄</li>
+                    <li><strong>合作夥伴合規：</strong>合作夥伴協議要求 IP 合規、數據隱私</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h2>推薦的系統和集成</h2>
+
+                <h3>核心系統</h3>
+                <table>
+                    <tr>
+                        <th>系統</th>
+                        <th>主要用途</th>
+                        <th>示例</th>
+                    </tr>
+                    <tr>
+                        <td><strong>ERP</strong></td>
+                        <td>訂單管理、庫存、財務報告</td>
+                        <td>NetSuite、Dynamics 365</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CRM</strong></td>
+                        <td>銷售管道、客戶關係、交易追踪</td>
+                        <td>Salesforce、HubSpot</td>
+                    </tr>
+                    <tr>
+                        <td><strong>PRM</strong></td>
+                        <td>夥伴上線、交易註冊、培訓、績效</td>
+                        <td>ZINFI、Impartner</td>
+                    </tr>
+                    <tr>
+                        <td><strong>CPQ</strong></td>
+                        <td>建議生成、定價、折扣批准</td>
+                        <td>Salesforce CPQ</td>
+                    </tr>
+                    <tr>
+                        <td><strong>BI/報告</strong></td>
+                        <td>儀表板、KPI 追踪、行政報告</td>
+                        <td>Tableau、Power BI</td>
+                    </tr>
+                </table>
+
+                <h3>推薦的科技堆棧</h3>
+                <ol>
+                    <li>Salesforce CRM（行業標準）</li>
+                    <li>NetSuite 或 Dynamics 365 ERP（全面財務控制）</li>
+                    <li>ZINFI 或 Impartner PRM（夥伴支持）</li>
+                    <li>Salesforce CPQ（定價、建議）</li>
+                    <li>Zuora 或 Apptio（訂閱/續訂管理）</li>
+                    <li>HubSpot 或 Marketo（營銷自動化）</li>
+                    <li>Tableau 或 Power BI（KPI 儀表板）</li>
+                </ol>
+            </div>
+
+            <div class="content-card">
+                <h2>關鍵儀表板和指標</h2>
+
+                <h3>周度儀表板（5-10 分鐘檢查）</h3>
+                <ul>
+                    <li><strong>管道：</strong>總管道與目標；合格管道；預報準確度</li>
+                    <li><strong>供應商績效：</strong>按供應商的管道</li>
+                    <li><strong>關鍵交易：</strong>大交易的狀態</li>
+                    <li><strong>營運：</strong>準時交付率；開票天數；DSO</li>
+                </ul>
+
+                <h3>月度儀表板（15-20 分鐘審查）</h3>
+                <ul>
+                    <li><strong>收入：</strong>月度實際 vs 目標；YTD 實際 vs 目標；% 計劃</li>
+                    <li><strong>毛利：</strong>毛利 $；毛利 %；與目標對比</li>
+                    <li><strong>返利：</strong>本月賺取；按供應商的返利 %</li>
+                    <li><strong>合作夥伴績效：</strong>活躍合作夥伴；新合作夥伴；合作夥伴收入；認證率</li>
+                    <li><strong>營運：</strong>訂單數量；填充率；準時交付；DSO；更新速率</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Team Development Section -->
+        <section id="team" class="section">
+            <div class="section-header">
+                <h1>團隊領導和個人發展</h1>
+                <p>打造高績效團隊並發展自己成為迷你 GM</p>
+            </div>
+
+            <div class="content-card">
+                <h2>6 人團隊角色和職責</h2>
+
+                <h3>您：產品經理/BU 主管</h3>
+                <ul>
+                    <li><strong>標題：</strong>高級產品經理、網路安全 BDM</li>
+                    <li><strong>P&L 所有權：</strong>$10M+ 年度收入、15%+ 毛利率、5%+ 營運利潤</li>
+                    <li><strong>主要責任：</strong>供應商管理、戰略規劃、團隊領導、銷售領導、跨職能對齐</li>
+                    <li><strong>成功指標：</strong>$10M+ 年度收入、15%+ 毛利率、>90% 預報準確度、15-20 活躍合作夥伴、eNPS &gt;50</li>
+                </ul>
+
+                <h3>高級銷售經理（企業）</h3>
+                <ul>
+                    <li><strong>主要責任：</strong>直接銷售給大客戶、關鍵帳戶管理、配額達成</li>
+                    <li><strong>目標：</strong>$2M+ 年度收入；80%+ 配額達成；3-4 贏交易/季度</li>
+                    <li><strong>所需技能：</strong>5-8 年企業銷售經驗、$50K-$500K+ 交易關閉、強談判技能</li>
+                </ul>
+
+                <h3>產品專家/預銷售工程師</h3>
+                <ul>
+                    <li><strong>主要責任：</strong>技術預銷售、解決方案設計、合作夥伴支持、認證計劃</li>
+                    <li><strong>目標：</strong>50+ 客戶/合作夥伴交互/季度；8.5/10 客戶滿意度；80%+ 合作夥伴認證完成</li>
+                    <li><strong>所需技能：</strong>5-8 年網路安全經驗、強技術基礎、將複雜概念傳達給非技術觀眾的能力</li>
+                </ul>
+
+                <h3>合作夥伴開發經理</h3>
+                <ul>
+                    <li><strong>主要責任：</strong>合作夥伴招聘、上線、支持、共同銷售</li>
+                    <li><strong>目標：</strong>年度 8-10 個新合作夥伴；合作夥伴收入增長 25% YoY；>90% 保留率</li>
+                    <li><strong>所需技能：</strong>5-7 年渠道銷售經驗、合作夥伴招聘經驗、組織和培訓能力</li>
+                </ul>
+
+                <h3>營運/分析經理</h3>
+                <ul>
+                    <li><strong>主要責任：</strong>銷售預報、報告、管道分析、合規、流程改進</li>
+                    <li><strong>目標：</strong>>85% 預報準確度；&lt;45 天 DSO；&gt;98% 準時交付；周度/月度儀表板更新</li>
+                    <li><strong>所需技能：</strong>3-5 年銷售營運經驗、強 Excel 和分析技能、CRM/ERP 經驗</li>
+                </ul>
+
+                <h3>銷售發展代表（SDR）</h3>
+                <ul>
+                    <li><strong>主要責任：</strong>潛在顧客生成、初步資格、會議預定</li>
+                    <li><strong>目標：</strong>40-50+ 合格活動/月；20+ 預定會議；30%+ 會議到機會轉換</li>
+                    <li><strong>所需技能：</strong>2-3 年銷售發展經驗、強溝通技能、韌性</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h2>如何運行有效的會議</h2>
+
+                <h3>周度團隊同步（30 分鐘，周一 9 AM）</h3>
+                <ul>
+                    <li><strong>議程：</strong>慶祝（5 分鐘）→ 管道更新（10 分鐘）→ 阻礙和風險（10 分鐘）→ 行動項目（5 分鐘）</li>
+                    <li><strong>格式：</strong>實時呼叫；互動；鼓勵問題</li>
+                    <li><strong>成果：</strong>團隊對優先事項對齐、阻礙升級、慶祝勝利</li>
+                </ul>
+
+                <h3>月度業務審查（1 小時，月底周五）</h3>
+                <ul>
+                    <li><strong>議程：</strong>收入績效（10 分鐘）→ 毛利（5 分鐘）→ 管道（10 分鐘）→ 供應商績效（10 分鐘）→ 合作夥伴績效（10 分鐘）→ 營運（5 分鐘）→ 下月優先事項（10 分鐘）</li>
+                    <li><strong>預工作：</strong>營運經理準備一頁執行摘要 + 儀表板</li>
+                    <li><strong>格式：</strong>演示 + 討論；數據驅動</li>
+                </ul>
+
+                <h3>一對一（月度 30 分鐘）</h3>
+                <ul>
+                    <li><strong>銷售經理：</strong>帳戶進度、個人績效、教練、職業發展</li>
+                    <li><strong>合作夥伴經理：</strong>合作夥伴招聘進度、合作夥伴保留、教練</li>
+                    <li><strong>預銷售：</strong>供應商關係、培訓有效性、技術挑戰</li>
+                    <li><strong>營運：</strong>預報和管道健康、流程改進、職業發展</li>
+                    <li><strong>SDR：</strong>活動和指標、通話質量、潛在客戶轉換（雙周 20 分鐘）</li>
+                </ul>
+
+                <h3>一對一最佳實踐</h3>
+                <ul>
+                    <li>準備（審查他們的活動、項目、指標）</li>
+                    <li>開放式問題（不只是講課）</li>
+                    <li>發展焦點（不僅僅是績效管理）</li>
+                    <li>做筆記；跟進行動項目</li>
+                    <li>清楚最後期望</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h2>12 個月學習路線圖</h2>
+
+                <h3>Q1：基礎（月份 1-3）</h3>
+                <ul>
+                    <li><strong>全隊：</strong>網路安全市場基礎；您的公司合作夥伴/供應商生態系統；CRM 和系統熟練度；合規基礎</li>
+                    <li><strong>銷售經理：</strong>企業銷售方法論；帳戶規劃工作坊</li>
+                    <li><strong>合作夥伴經理：</strong>渠道合作夥伴上線最佳實踐；合作夥伴支持計劃設計；當地市場研究</li>
+                    <li><strong>預銷售：</strong>防火牆/SASE 深潛；技術認證；演示環境設置</li>
+                    <li><strong>SDR：</strong>勘察基礎；CRM 培訓；銷售流程概覽</li>
+                    <li><strong>營運：</strong>預報方法論；BI 工具培訓</li>
+                </ul>
+
+                <h3>Q2：中級（月份 4-6）</h3>
+                <ul>
+                    <li><strong>全隊：</strong>上市策略深潛；競爭景觀分析；供應商路線圖簡報</li>
+                    <li><strong>銷售經理：</strong>異議處理；談判技能；客戶參考開發</li>
+                    <li><strong>合作夥伴經理：</strong>合作夥伴認證計劃設計；共同銷售手冊開發</li>
+                    <li><strong>預銷售：</strong>端點安全深潛；高級防火牆/SASE 實驗室工作；POC 管理</li>
+                    <li><strong>SDR：</strong>電子郵件外展序列；異議處理；會議準備</li>
+                    <li><strong>營運：</strong>盈利能力分析；合作夥伴績效分析</li>
+                </ul>
+
+                <h3>Q3：高級（月份 7-9）</h3>
+                <ul>
+                    <li><strong>全隊：</strong>行業會議或貿易展；QBR 準備；定價策略</li>
+                    <li><strong>銷售經理：</strong>高級帳戶規劃；高管參與；管道預測</li>
+                    <li><strong>合作夥伴經理：</strong>合作夥伴招聘手冊優化；共同營銷計劃；合作夥伴成功指標</li>
+                    <li><strong>預銷售：</strong>電子郵件安全深潛；雲安全新興解決方案</li>
+                    <li><strong>SDR：</strong>潛在客戶資格框架；領地規劃（如果升級到 AE）</li>
+                    <li><strong>營運：</strong>季度規劃；儀表板增強；流程自動化項目</li>
+                </ul>
+
+                <h3>Q4：掌握和策略（月份 10-12）</h3>
+                <ul>
+                    <li><strong>全隊：</strong>年度規劃；年度反思；預算規劃</li>
+                    <li><strong>銷售經理：</strong>帳戶擴展策略；思想領導開發（文章、演講）；SDR 輔導</li>
+                    <li><strong>合作夥伴經理：</strong>合作夥伴策略審查；新興渠道機會；層級演變</li>
+                    <li><strong>預銷售：</strong>專業化路徑；認證掌握；銷售工程領導</li>
+                    <li><strong>SDR：</strong>年度績效審查；職業發展對話；領地擴展規劃</li>
+                    <li><strong>營運：</strong>系統評估；流程文檔；職業進展</li>
+                </ul>
+            </div>
+
+            <div class="content-card">
+                <h2>您的個人發展計劃：迷你 GM 之路</h2>
+
+                <h3>願景（12-18 個月）</h3>
+                <p>成為香港和大中華地區網路安全分配業務的公認領導者，以以下聞名：</p>
+                <ul>
+                    <li>深入供應商關係和合同談判能力</li>
+                    <li>世界級夥伴生態系統（20-30 個活躍、良好培訓的合作夥伴）</li>
+                    <li>一致盈利成長（15% YoY）</li>
+                    <li>高績效、敬業團隊（eNPS &gt;50）</li>
+                    <li>戰略見解和市場領導力（為執行團隊指導網路安全趨勢、M&A 機會）</li>
+                </ul>
+
+                <h3>90 天個人學習計劃（月份 1-3）</h3>
+
+                <h4>領域 1：財務和營運卓越</h4>
+                <ul>
+                    <li><strong>行動：</strong>完成「分配商財務管理」線上課程（30 小時；Q1 末）</li>
+                    <li><strong>行動：</strong>深潛 P&L：分解每個成本中心（COGS、團隊薪資、MDF、折扣、返利）</li>
+                    <li><strong>成果：</strong>您可以表達利潤驅動因素和識別 2-3 個盈利槓桿</li>
+                </ul>
+
+                <h4>領域 2：供應商談判和關係管理</h4>
+                <ul>
+                    <li><strong>行動：</strong>與 3 個關鍵供應商安排 1:1；要求他們的 VP/主管</li>
+                    <li><strong>行動：</strong>為每次 1:1 準備（您的績效、他們的目標、返利進度）</li>
+                    <li><strong>成果：</strong>與 2 個供應商達成更好的層級狀態或獨家定價；返利達成提高 0.5-1%</li>
+                </ul>
+
+                <h4>領域 3：渠道策略和合作夥伴招聘</h4>
+                <ul>
+                    <li><strong>行動：</strong>親自訪問 5-8 個目標合作夥伴（在香港/深圳）；理解他們的業務</li>
+                    <li><strong>行動：</strong>親自招聘 2-3 個新合作夥伴；關閉招聘電話</li>
+                    <li><strong>成果：</strong>深刻理解合作夥伴生態系統；著陸 2-3 個新合作夥伴</li>
+                </ul>
+
+                <h4>領域 4：團隊發展</h4>
+                <ul>
+                    <li><strong>行動：</strong>與所有 5 個團隊成員進行 1:1；理解職業抱負、技能缺口</li>
+                    <li><strong>行動：</strong>為每人創建個人發展計劃（學習目標、里程碑）</li>
+                    <li><strong>成果：</strong>團隊與您的願景對齐；每個人都有清晰的 12 個月路線圖</li>
+                </ul>
+
+                <h3>6 個月個人學習計劃（月份 4-6）</h3>
+
+                <h4>領域 1：市場和競爭策略</h4>
+                <ul>
+                    <li><strong>行動：</strong>參加 1-2 個網路安全行業活動（RSA、Infosec、區域活動）</li>
+                    <li><strong>行動：</strong>進行 10+ 客戶/合作夥伴訪談（月 2-3 次）</li>
+                    <li><strong>成果：</strong>您有深刻的市場見解；可以可信地談論香港/大中華網路安全趨勢</li>
+                </ul>
+
+                <h4>領域 2：業務發展和 M&A</h4>
+                <ul>
+                    <li><strong>行動：</strong>評估 2-3 個潛在合作夥伴或收購目標</li>
+                    <li><strong>行動：</strong>為高級領導準備戰略選項的業務案例</li>
+                    <li><strong>成果：</strong>可以表達超越有機增長的成長機會</li>
+                </ul>
+
+                <h4>領域 3：個人品牌和思想領導</h4>
+                <ul>
+                    <li><strong>行動：</strong>撰寫 2 篇關於網路安全分配趨勢的文章（發布在 LinkedIn、行業出版物）</li>
+                    <li><strong>行動：</strong>在 1-2 個行業活動或網絡研討會上演講</li>
+                    <li><strong>成果：</strong>被認可為市場專家；改進招聘、供應商關係、客戶認知</li>
+                </ul>
+
+                <h4>領域 4：團隊卓越和文化</h4>
+                <ul>
+                    <li><strong>行動：</strong>設計和執行第一個全體員工非正式活動或工作坊（團隊建設 + 戰略規劃）</li>
+                    <li><strong>行動：</strong>實施季度業務審查（QBR）與團隊 + 董事會成員</li>
+                    <li><strong>成果：</strong>團隊對齐、高績效和敬業（eNPS &gt;50）</li>
+                </ul>
+
+                <h3>12 個月個人學習計劃（月份 7-12）</h3>
+
+                <h4>領域 1：執行領導和戰略規劃</h4>
+                <ul>
+                    <li><strong>行動：</strong>主導年度戰略規劃流程（下年度網路安全 BU 策略）</li>
+                    <li><strong>行動：</strong>向公司領導力和董事會呈現策略</li>
+                    <li><strong>成果：</strong>被認可為戰略領導者；塑造公司方向</li>
+                </ul>
+
+                <h4>領域 2：擴展和營運卓越</h4>
+                <ul>
+                    <li><strong>行動：</strong>設計和實施擴展系統/工具（PRM、CPQ、BI 儀表板）</li>
+                    <li><strong>行動：</strong>記錄流程和手冊（合作夥伴上線、供應商管理、銷售）</li>
+                    <li><strong>成果：</strong>業務可以擴展到 $15-20M，無需成比例的人員增加</li>
+                </ul>
+
+                <h4>領域 3：客戶和合作夥伴關係</h4>
+                <ul>
+                    <li><strong>行動：</strong>建立關鍵合作夥伴的「顧問委員會」（5-8 個；季度會議）</li>
+                    <li><strong>行動：</strong>進行 NPS 和滿意度調查（合作夥伴和關鍵客戶）</li>
+                    <li><strong>成果：</strong>關於業務健康的直接反饋；合作夥伴感到被重視和聽見</li>
+                </ul>
+
+                <h4>領域 4：職業進展和下一步</h4>
+                <ul>
+                    <li><strong>行動：</strong>與經理/CEO 討論：Director/VP 角色的路徑？</li>
+                    <li><strong>行動：</strong>開始在公司指導初級經理（擴大領導力影響）</li>
+                    <li><strong>成果：</strong>清晰的前進路徑；被視為組織中的未來領導者</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Action Plans Section -->
+        <section id="action-plan" class="section">
+            <div class="section-header">
+                <h1>90 天、6 個月和 12 個月行動計劃</h1>
+                <p>具體倡議、所有者和可測量結果</p>
+            </div>
+
+            <div class="content-card">
+                <h2>12 個月戰略執行路線圖</h2>
+                <div class="image-container">
+                    <img src="https://ppl-ai-code-interpreter-files.s3.amazonaws.com/web/direct-files/ced22812fdf480810056c2c24a3eb076/ba3f26cd-af32-4d55-95de-2af174da94e5/b4ea1f6e.png" alt="12 個月路線圖">
+                    <div class="image-caption">12 個月戰略執行路線圖</div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2>90 天快速勝利計劃（月份 1-3）</h2>
+
+                <h3>主題：建立基礎、評估基線、建立勢頭</h3>
+
+                <h4>倡議 1：組合優化（周 1-4）</h4>
+                <ul>
+                    <li><strong>目標：</strong>理解當前供應商組合健康；識別快速勝利以改進盈利</li>
+                    <li><strong>行動：</strong>
+                        <ol>
+                            <li>審計當前供應商關係（周 1）</li>
+                            <li>與前 2 個供應商談判改進條款（周 2-4）</li>
+                            <li>評估 2-3 個新供應商進行試驗（周 3-4）</li>
+                        </ol>
+                    </li>
+                    <li><strong>所有者：</strong>您（PM）</li>
+                    <li><strong>KPI：</strong>前 2 個供應商返利達成 &gt;95%；1-2 個新供應商試驗啟動</li>
+                </ul>
+
+                <h4>倡議 2：合作夥伴招聘和快速勝利（周 1-8）</h4>
+                <ul>
+                    <li><strong>目標：</strong>招聘 3-5 個新合作夥伴；與現有合作夥伴結案第一筆交易</li>
+                    <li><strong>行動：</strong>
+                        <ol>
+                            <li>識別 30 個目標合作夥伴（周 1）</li>
+                            <li>外展和發現電話（周 2-6）</li>
+                            <li>上線第一批合作夥伴（周 5-8）</li>
+                        </ol>
+                    </li>
+                    <li><strong>所有者：</strong>合作夥伴開發經理</li>
+                    <li><strong>KPI：</strong>5 個新合作夥伴上線；$50K+ 來自新合作夥伴的 Q1 收入；50%+ 新合作夥伴在培訓中</li>
+                </ul>
+
+                <h4>倡議 3：銷售管道和預報（周 1-12）</h4>
+                <ul>
+                    <li><strong>目標：</strong>建立預報紀律；建立合格管道</li>
+                    <li><strong>行動：</strong>
+                        <ol>
+                            <li>設置 CRM 和預報流程（周 1-2）</li>
+                            <li>建立管道（周 3-12）</li>
+                            <li>執行交易管理（進行中）</li>
+                        </ol>
+                    </li>
+                    <li><strong>所有者：</strong>高級銷售經理、營運經理</li>
+                    <li><strong>KPI：</strong>管道覆蓋率 3.5x；合格管道 $2M+；預報準確度 &gt;85%</li>
+                </ul>
+
+                <h4>倡議 4：營運基礎（周 1-12）</h4>
+                <ul>
+                    <li><strong>目標：</strong>建立 KPI 報告、流程清晰度、團隊對齐</li>
+                    <li><strong>行動：</strong>
+                        <ol>
+                            <li>KPI 儀表板（周 1-2）</li>
+                            <li>流程文檔（周 3-8）</li>
+                            <li>團隊對齐（進行中）</li>
+                        </ol>
+                    </li>
+                    <li><strong>所有者：</strong>營運經理、您（PM）</li>
+                    <li><strong>KPI：</strong>儀表板按計劃更新；100% 流程文檔；團隊敬業度評分</li>
+                </ul>
+
+                <h3>90 天成果和成功指標</h3>
+                <table>
+                    <tr>
+                        <th>指標</th>
+                        <th>目標</th>
+                        <th>上升</th>
+                    </tr>
+                    <tr>
+                        <td>供應商返利達成（前 2）</td>
+                        <td>&gt;95%</td>
+                        <td>&gt;98%</td>
+                    </tr>
+                    <tr>
+                        <td>新合作夥伴上線</td>
+                        <td>3-5</td>
+                        <td>6-8</td>
+                    </tr>
+                    <tr>
+                        <td>新合作夥伴收入</td>
+                        <td>$30-50K</td>
+                        <td>$75K+</td>
+                    </tr>
+                    <tr>
+                        <td>直接銷售管道</td>
+                        <td>$2M+</td>
+                        <td>$2.5M+</td>
+                    </tr>
+                    <tr>
+                        <td>合作夥伴管道</td>
+                        <td>$500K+</td>
+                        <td>$1M+</td>
+                    </tr>
+                    <tr>
+                        <td>預報準確度</td>
+                        <td>&gt;85%</td>
+                        <td>&gt;90%</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h2>6 個月執行計劃（月份 4-6）</h2>
+
+                <h3>主題：擴展、執行、優化</h3>
+
+                <h4>倡議 1：供應商組合擴展和加深（月份 4-6）</h4>
+                <ul>
+                    <li><strong>目標：</strong>加深與頂級供應商的關係；啟動 1-2 個新供應商；優化邊際</li>
+                    <li><strong>行動：</strong>
+                        <ol>
+                            <li>進行 Q2 QBR（月份 4）</li>
+                            <li>擴展新供應商試驗（月份 4-6）</li>
+                            <li>利潤優化審查（月份 5）</li>
+                        </ol>
+                    </li>
+                    <li><strong>所有者：</strong>您（PM）</li>
+                    <li><strong>KPI：</strong>前 3 個供應商按 Y1 目標追踪；返利達成 85%+；1 個新供應商 &gt;$50K；定價實現 &gt;90%</li>
+                </ul>
+
+                <h4>倡議 2：合作夥伴渠道加速（月份 4-6）</h4>
+                <ul>
+                    <li><strong>目標：</strong>擴展合作夥伴數量、收入和敬業度</li>
+                    <li><strong>行動：</strong>
+                        <ol>
+                            <li>啟動合作夥伴層級計劃（月份 4）</li>
+                            <li>合作夥伴支持計劃（月份 4-6）</li>
+                            <li>繼續招聘（月份 4-6）</li>
+                            <li>合作夥伴共同銷售（月份 4-6）</li>
+                        </ol>
+                    </li>
+                    <li><strong>所有者：</strong>合作夥伴開發經理</li>
+                    <li><strong>KPI：</strong>10+ 新合作夥伴上線；15-20 活躍合作夥伴；70% 認證；合作夥伴收入 $500K+；合作夥伴管道 40%+</li>
+                </ul>
+
+                <h4>倡議 3：銷售執行和配額達成（月份 4-6）</h4>
+                <ul>
+                    <li><strong>目標：</strong>達到 Q2 收入目標；為 Q3-Q4 建立管道</li>
+                    <li><strong>行動：</strong>
+                        <ol>
+                            <li>帳戶計劃執行（月份 4-6）</li>
+                            <li>管道發展（進行中）</li>
+                            <li>交易管理和速度（進行中）</li>
+                        </ol>
+                    </li>
+                    <li><strong>所有者：</strong>高級銷售經理、SDR</li>
+                    <li><strong>KPI：</strong>Q2 收入 $1.5M+（追踪 $6M 年度）；管道覆蓋率 3.5x+；預報準確度 &gt;90%；直接銷售配額 &gt;80%</li>
+                </ul>
+
+                <h4>倡議 4：營運卓越和系統（月份 4-6）</h4>
+                <ul>
+                    <li><strong>目標：</strong>優化訂單到現金、改進效率、建立自動化</li>
+                    <li><strong>行動：</strong>
+                        <ol>
+                            <li>系統審查和優化（月份 4）</li>
+                            <li>KPI 儀表板增強（月份 4-5）</li>
+                            <li>流程改進倡議（月份 5-6）</li>
+                        </ol>
+                    </li>
+                    <li><strong>所有者：</strong>營運經理、您（PM）</li>
+                    <li><strong>KPI：</strong>訂單履行時間 &lt;48 小時；DSO &lt;40 天；準時交付 &gt;98%；儀表板準確度 100%；2-3 個流程改進完成</li>
+                </ul>
+
+                <h3>6 個月成果和成功指標</h3>
+                <table>
+                    <tr>
+                        <th>指標</th>
+                        <th>目標</th>
+                        <th>上升</th>
+                    </tr>
+                    <tr>
+                        <td>YTD 總收入</td>
+                        <td>$3M</td>
+                        <td>$3.5M</td>
+                    </tr>
+                    <tr>
+                        <td>合作夥伴數量</td>
+                        <td>15-20</td>
+                        <td>20-25</td>
+                    </tr>
+                    <tr>
+                        <td>合作夥伴 YTD 收入</td>
+                        <td>$1M+</td>
+                        <td>$1.5M+</td>
+                    </tr>
+                    <tr>
+                        <td>合作夥伴管道 %</td>
+                        <td>40%+</td>
+                        <td>50%+</td>
+                    </tr>
+                    <tr>
+                        <td>返利達成（YTD）</td>
+                        <td>85%+</td>
+                        <td>90%+</td>
+                    </tr>
+                    <tr>
+                        <td>預報準確度</td>
+                        <td>&gt;90%</td>
+                        <td>&gt;95%</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h2>12 個月戰略計劃（全年）</h2>
+
+                <h3>Q3 焦點：勢頭和擴展（月份 7-9）</h3>
+                <ul>
+                    <li><strong>供應商：</strong>推動 H2 返利達成；啟動 2-3 個新供應商倡議；協商年度合同續訂</li>
+                    <li><strong>合作夥伴：</strong>擴展到 25-30 個活躍合作夥伴；80%+ 認證；50%+ 合作夥伴-引領收入</li>
+                    <li><strong>銷售：</strong>Q3 收入 $2.5M；結案 5-8 個企業交易；Q4-Q1 管道 $3M+</li>
+                    <li><strong>團隊：</strong>所有成員達到「中級」技能水準；確定高績效者；團隊敬業度高</li>
+                    <li><strong>關鍵倡議：</strong>合作夥伴峰會/會議；思想領導；市場研究</li>
+                </ul>
+
+                <h3>Q4 焦點：卓越和策略（月份 10-12）</h3>
+                <ul>
+                    <li><strong>供應商：</strong>達到 Y1 目標；達成 85%+ 返利；協商 Y2 合同</li>
+                    <li><strong>合作夥伴：</strong>30+ 活躍合作夥伴；50%+ 合作夥伴收入；>90% 保留率；識別「白金」合作夥伴</li>
+                    <li><strong>銷售：</strong>Q4 收入推送 $3-3.5M；達成 Y1 目標 $10-11M+；建立 Y2 管道</li>
+                    <li><strong>團隊：</strong>所有成員達到「高級」技能；確定升職路徑；為 Y2 成長做好準備</li>
+                    <li><strong>戰略倡議：</strong>年度規劃；團隊非正式活動；反思和教訓</li>
+                </ul>
+
+                <h3>全年（12 個月）成功指標</h3>
+                <table>
+                    <tr>
+                        <th>指標</th>
+                        <th>目標</th>
+                        <th>上升</th>
+                    </tr>
+                    <tr>
+                        <td><strong>收入和盈利能力</strong></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>年度總收入</td>
+                        <td>$10M</td>
+                        <td>$11M+</td>
+                    </tr>
+                    <tr>
+                        <td>毛利率 %</td>
+                        <td>15%+</td>
+                        <td>16%+</td>
+                    </tr>
+                    <tr>
+                        <td>營運利潤率 %</td>
+                        <td>5%+</td>
+                        <td>6%+</td>
+                    </tr>
+                    <tr>
+                        <td>返利收入</td>
+                        <td>$150K+ (1.5%)</td>
+                        <td>$200K+ (2%)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>供應商組合</strong></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>供應商數量</td>
+                        <td>8-10</td>
+                        <td>10-12</td>
+                    </tr>
+                    <tr>
+                        <td>第 1 層供應商收入</td>
+                        <td>各 $2-3M</td>
+                        <td>各 $2.5-3.5M</td>
+                    </tr>
+                    <tr>
+                        <td>供應商層級達成</td>
+                        <td>80%+</td>
+                        <td>90%+</td>
+                    </tr>
+                    <tr>
+                        <td><strong>合作夥伴渠道</strong></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>活躍合作夥伴</td>
+                        <td>30+</td>
+                        <td>35+</td>
+                    </tr>
+                    <tr>
+                        <td>合作夥伴收入</td>
+                        <td>$5M+ (50%+)</td>
+                        <td>$6M+ (60%+)</td>
+                    </tr>
+                    <tr>
+                        <td>合作夥伴收入成長</td>
+                        <td>25%+ YoY</td>
+                        <td>35%+ YoY</td>
+                    </tr>
+                    <tr>
+                        <td>合作夥伴認證率</td>
+                        <td>80%+</td>
+                        <td>85%+</td>
+                    </tr>
+                    <tr>
+                        <td>合作夥伴 NPS</td>
+                        <td>&gt;40</td>
+                        <td>&gt;50</td>
+                    </tr>
+                    <tr>
+                        <td><strong>銷售執行</strong></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>直接銷售收入</td>
+                        <td>$3-4M</td>
+                        <td>$4-5M</td>
+                    </tr>
+                    <tr>
+                        <td>合作夥伴管道 %</td>
+                        <td>50%+</td>
+                        <td>60%+</td>
+                    </tr>
+                    <tr>
+                        <td>企業交易結案</td>
+                        <td>15-20</td>
+                        <td>20-25</td>
+                    </tr>
+                    <tr>
+                        <td><strong>團隊和營運</strong></td>
+                        <td></td>
+                        <td></td>
+                    </tr>
+                    <tr>
+                        <td>團隊敬業度 (eNPS)</td>
+                        <td>&gt;50</td>
+                        <td>&gt;60</td>
+                    </tr>
+                    <tr>
+                        <td>預報準確度</td>
+                        <td>&gt;90%</td>
+                        <td>&gt;95%</td>
+                    </tr>
+                    <tr>
+                        <td>準時交付</td>
+                        <td>&gt;98%</td>
+                        <td>&gt;99%</td>
+                    </tr>
+                    <tr>
+                        <td>DSO</td>
+                        <td>&lt;40 天</td>
+                        <td>&lt;35 天</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="content-card">
+                <h2>結論</h2>
+                <p>這個藍圖為您提供了在香港和大中華地區打造世界級網路安全分配業務的完整路線圖。在未來 12-18 個月內，您將從日常供應商和銷售活動的管理者轉變為推動盈利增長、建立最佳合作夥伴生態系統的戰略業務領導者。</p>
+
+                <h3>核心成功因素（記住這些）</h3>
+                <ol>
+                    <li><strong>利潤優先於量：</strong>不要為了邊際而追逐收入；每筆交易都應該貢獻毛利</li>
+                    <li><strong>合作夥伴優先心態：</strong>50%+ 收入應來自合作夥伴；大力投資合作夥伴成功</li>
+                    <li><strong>供應商紀律：</strong>像管理銷售團隊一樣管理供應商；對目標、KPI、支持承諾承擔責任</li>
+                    <li><strong>營運卓越：</strong>由於邊際微薄，營運效率是盈利的關鍵槓桿</li>
+                    <li><strong>團隊發展：</strong>您的團隊是競爭優勢；投資他們的成長、保留高績效者、建立獲勝文化</li>
+                </ol>
+
+                <h3>前進的道路</h3>
+                <ul>
+                    <li><strong>月份 1-3：</strong>建立基礎（組合審計、合作夥伴招聘、預報紀律）</li>
+                    <li><strong>月份 4-6：</strong>執行和擴展（供應商加深、合作夥伴加速、銷售執行）</li>
+                    <li><strong>月份 7-12：</strong>領導和策略（團隊成熟、市場領導、Y2 規劃）</li>
+                </ul>
+
+                <p>您現在有工具、手冊和路線圖成為網路安全業務單位的「迷你 GM」。剩下的只是執行。從您的 90 天計劃開始，逐季度建立勢頭，年底時，您將已經將您的業務轉變為一個盈利、高增長的組織，擁有世界級的合作夥伴生態系統和高績效團隊。</p>
+
+                <p><strong>祝您好運！</strong></p>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <p>&copy; 2025 網路安全分配卓越藍圖 | 香港及大中華地區 | 產品經理完整指南</p>
+        <p>本網站已針對響應式瀏覽和現代設備優化 | 光色技術風格設計</p>
+    </footer>
+
+    <script>
+        // Navigation functionality
+        document.querySelectorAll('.nav-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                // Remove active class from all buttons and sections
+                document.querySelectorAll('.nav-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                document.querySelectorAll('.section').forEach(sec => {
+                    sec.classList.remove('active');
+                });
+
+                // Add active class to clicked button and corresponding section
+                this.classList.add('active');
+                const sectionId = this.getAttribute('data-section');
+                document.getElementById(sectionId).classList.add('active');
+
+                // Scroll to top
+                window.scrollTo(0, 0);
+            });
+        });
+
+        // Tab functionality (if needed for future content)
+        document.querySelectorAll('.tab-button').forEach(button => {
+            button.addEventListener('click', function() {
+                const tabGroup = this.parentElement;
+                tabGroup.querySelectorAll('.tab-button').forEach(btn => {
+                    btn.classList.remove('active');
+                });
+                tabGroup.parentElement.querySelectorAll('.tab-content').forEach(content => {
+                    content.classList.remove('active');
+                });
+
+                this.classList.add('active');
+                // Activate corresponding tab content if needed
+            });
+        });
+    </script>
+</body>
+</html>
